@@ -42,8 +42,6 @@ def start():
 
 @app.route("/logout")  #logout page, this page doesnt have html file because the user never is going to see this page, is auto-redirect to the home page
 def logout():
-    print(session["name"])  #print in the console the user data
-    print(session["flav0"],session["flav1"],session["flav2"]) #print in the console the user data
     session.pop("name", None)  #removes all the data in the session with the name "name"
     session.pop("flav", None)  #removes all the data in the session with the name "flav"
     return redirect(url_for("home"))  #redirects the user to the home page so they can create another session
