@@ -4,14 +4,12 @@
     <title>Flavours</title>
 </head>
 <body>
-    {% block content %}
     <h1>{{session["name"]}} your flavours are:</h1>
     <p>Flavour {{session["flav0"]}}</p>
     <p>Flavour {{session["flav1"]}}</p>
     <p>Flavour {{session["flav2"]}}</p>
-    <form action="#" method="post">
-        <p><input type="submit" name="logout_button" value="logout"/></p>
+    <form action="#" method="post"> <!-- creating a action with the "post" method -->
+        <p><input type="submit" name="logout_button" value="logout"/></p> <!-- button to submit the "logout" value for the user to logout -->
     </form> 
-    {% endblock %}
 </body>
 </html>
