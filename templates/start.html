@@ -18,6 +18,7 @@
          margin-top: 70px;
         }
          </style>
+         
 </head>
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
     <div style="text-align: center;" class="textBlock2">
@@ -28,7 +29,16 @@
         <p>Flavour 3: <input type="text" name="flav3" /></p> <!-- store the user data in a box text -->
         <p><input type="submit" name="submit_button" value="submit"/> <!-- submit the user data in the boxes text, the type "text" -->
             <input type="submit" name="logout_button" value="logout"/></p> <!-- button to submit the "logout" value for the user to logout -->
+            {% block content %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p style='color: #ec4029;'>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </form>
+        {% endblock %}
     </div>
 </body>
 </html>

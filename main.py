@@ -1,4 +1,9 @@
-from flask import Flask, redirect, sessions, url_for, render_template, request, session
+from flask import Flask, redirect, sessions, url_for, render_template, request, session, flash
+import sys 
+import os
+sys.path.append(os.path.abspath("./function"))
+from function import *
+
 
 app = Flask(__name__) 
 app.secret_key = "erdgibgvjdfgvgrfder9e76d87g68fc9xgvdyx7b"  #secret key, dont touch
@@ -12,8 +17,13 @@ def home():
     if "name" in session:  #checks if the user is already in the session
         return redirect(url_for("start"))  #if so is going to auto-redirect to the start page
     if request.method == "POST":  #Checks if the user POST something in the page (clicked in a button)
-        session["name"] = request.form["username"]  #Store the user Name in a session (temporaly until the user leaves the browser or click in the logout button)
-        return redirect(url_for("start"))  #When the name is stored in the session, its redirect to the start page
+        if check_email(request.form.get("email")):
+            session["email"] = request.form["email"]
+            session["name"] = request.form["username"]  #Store the user Name in a session (temporaly until the user leaves the browser or click in the logout button)
+            return redirect(url_for("start"))  #When the name is stored in the session, its redirect to the start page
+        else:
+            flash("Your email is not valid.", "+info")
+            return redirect(url_for("home"))
     else:      
         return render_template("index.html")  #render the html file
 
@@ -29,10 +39,14 @@ def start():
         if request.form.get("logout_button") == "logout":  #Checks if the user clicked in the logout button(In the html with the name "logout_button")
             return redirect(url_for("logout"))  #redirect the user to the logout page
         elif request.form.get("submit_button") == "submit":  #Checks ift the user clicked in the submit button(In the html with the name "submit_button")
-            session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
-            session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
-            session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
-            return redirect(url_for("flavour"))  #redirect the user to the /flavour page
+            if request.form.get("flav1").split() and request.form.get("flav2").split() and request.form.get("flav3").split():
+                session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
+                session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
+                session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
+                return redirect(url_for("flavour"))  #redirect the user to the /flavour page
+            else:
+                flash("Write in all parameters.", "+info")
+                return redirect(url_for("home"))
 
     if "name" in session:  #If the user is in the session, is going to render the html file and let the user there
         return render_template("start.html")  #render the html file
@@ -43,11 +57,17 @@ def start():
 @app.route("/logout")  #logout page, this page doesnt have html file because the user never is going to see this page, is auto-redirect to the home page
 def logout():
     session.pop("name", None)  #removes all the data in the session with the name "name"
-    session.pop("flav", None)  #removes all the data in the session with the name "flav"
+    session.pop("email", None)
+    session.pop("flav0", None)  #removes all the data in the session with the name "flav"
+    session.pop("flav1", None)
+    session.pop("flav2", None)
+    flash("You have been logged out.", "+info")
     return redirect(url_for("home"))  #redirects the user to the home page so they can create another session
 
 @app.route("/flavour", methods=["POST", "GET"])  #The flavour page needs the "POST" method because was the button to logout
 def flavour():
+    if "flav0" not in session:
+        return redirect(url_for("home"))
     if request.method == "POST":  #checks if the user is sending a POST request (clicked in a button)
         if request.form.get("logout_button") == "logout":  #checks if the user clicked in the logout button
             return redirect(url_for("logout"))  #redirect the user to the logout page

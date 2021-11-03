@@ -29,7 +29,16 @@
         <p style="color: #083328;"><b>Name: <input type="text" name="username" /></b> </p> <!-- stores the username in the type "text" with the name "username" -->
         <p style="color: #083328;"><b>Email: <input type="text" name="email" /></b> </p>
             <p><input type="submit" style=" background-color: #3A675B; color: #F9FFFE" value="submit"/> </p> <!-- submits the user data to the backend with the value "submit" -->
+            {% block content %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p style='color: #ec4029;'>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </form>
+        {% endblock %}
     </div>
 </body>
 </html>
