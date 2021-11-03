@@ -2,14 +2,35 @@
 <html>
 <head>
     <title>Home</title>
+    <style type="text/css">
+        .textBlock {
+         width: 400px;
+         font-family: Verdana, sans-serif;
+         background-color: #FBF7F1;
+         color: #05241C;
+         padding: 5px;
+         padding-right: 35px;
+         padding-left: 35px;
+         opacity: 0.87;
+         border-radius: 50px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-top: 70px;
+         box-shadow: 8px 15px 16px #110B06
+     ;
+        }
+         </style>
 </head>
-<body>
-    <h1>Type your name in the box!</h1>
-    <form action="#" method="post"> <!-- creating a action with the "post" method -->
-        <p>Name:</p>
-        <p><input type="text" name="username" /></p> <!-- stores the user name in the type "text" with the name "username" -->
-        <p><input type="submit" value="submit"/></p> <!-- submits the user data to the backend with the value "submit" -->
-    </form>
-
+<body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
+    <div style="text-align: center;" class="textBlock">
+        <h1>Hi, I'm a Taste Bot!</h1>
+        <p style=" font-size: 14pt; font-family:Helvetica"><b>I will help you choose the most suitable drink for you!</b></p>
+        <p style="color: #083328;">Type your name and email.</p>
+        <form action="#" method="post"> <!-- creating a action with the "post" method -->
+        <p style="color: #083328;"><b>Name: <input type="text" name="username" /></b> </p> <!-- stores the username in the type "text" with the name "username" -->
+        <p style="color: #083328;"><b>Email: <input type="text" name="email" /></b> </p>
+            <p><input type="submit" style=" background-color: #3A675B; color: #F9FFFE" value="submit"/> </p> <!-- submits the user data to the backend with the value "submit" -->
+        </form>
+    </div>
 </body>
 </html>
