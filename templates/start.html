@@ -2,15 +2,33 @@
 <html>
 <head>
     <title>Home</title>
+    <style type="text/css">
+        .textBlock2 {
+         width: 400px;
+         font-family: Verdana, sans-serif;
+         background-color: #FBF7F1;
+         color: #05241C;
+         padding: 5px;
+         padding-right: 35px;
+         padding-left: 35px;
+         opacity: 0.87;
+         border-radius: 50px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-top: 70px;
+        }
+         </style>
 </head>
-<body>
-    <h1>{{session["name"]}} give us your 3 favorites flavors</h1> <!-- uses the user session data, in this case the name -->
-    <form action="#" method="post"> <!-- creating a action with the "post" method -->
+<body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
+    <div style="text-align: center;" class="textBlock2">
+        <h2>{{session["name"]}}, give us your 3 favorites flavors</h2> <!-- uses the user session data, in this case the name -->
+        <form action="#" method="post"> <!-- creating a action with the "post" method -->
         <p>Flavour 1: <input type="text" name="flav1" /></p> <!-- store the user data in a box text -->
         <p>Flavour 2: <input type="text" name="flav2" /></p> <!-- store the user data in a box text -->
         <p>Flavour 3: <input type="text" name="flav3" /></p> <!-- store the user data in a box text -->
         <p><input type="submit" name="submit_button" value="submit"/> <!-- submit the user data in the boxes text, the type "text" -->
             <input type="submit" name="logout_button" value="logout"/></p> <!-- button to submit the "logout" value for the user to logout -->
-    </form>
+        </form>
+    </div>
 </body>
 </html>

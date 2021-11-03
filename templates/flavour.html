@@ -2,14 +2,32 @@
 <html>
 <head>
     <title>Flavours</title>
+    <style type="text/css">
+        .textBlock3 {
+         width: 400px;
+         font-family: Verdana, sans-serif;
+         background-color: #FBF7F1;
+         color: #05241C;
+         padding: 5px;
+         padding-right: 35px;
+         padding-left: 35px;
+         opacity: 0.87;
+         border-radius: 50px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-top: 70px;
+        }
+         </style>
 </head>
-<body>
-    <h1>{{session["name"]}} your flavours are:</h1>
-    <p>Flavour {{session["flav0"]}}</p>
-    <p>Flavour {{session["flav1"]}}</p>
-    <p>Flavour {{session["flav2"]}}</p>
-    <form action="#" method="post"> <!-- creating a action with the "post" method -->
-        <p><input type="submit" name="logout_button" value="logout"/></p> <!-- button to submit the "logout" value for the user to logout -->
-    </form> 
+<body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
+    <div style="text-align: center;" class="textBlock3">
+        <h1>Your flavours are:</h1>
+         <p>Flavour {{session["flav0"]}}</p>
+         <p>Flavour {{session["flav1"]}}</p>
+          <p>Flavour {{session["flav2"]}}</p>
+        <form action="#" method="post"> <!-- creating a action with the "post" method -->
+            <p><input type="submit" name="logout_button" value="logout"/></p> <!-- button to submit the "logout" value for the user to logout -->
+        </form> 
+    </div>
 </body>
 </html>
