@@ -15,12 +15,12 @@ def red():  #red==redirect
 @app.route("/home", methods=["POST", "GET"]) #The methods is needed here because the /home works with POST requests
 def home():
     if "name" in session:  #checks if the user is already in the session
-        return redirect(url_for("start"))  #if so is going to auto-redirect to the start page
+        return redirect(url_for("start"))  #if so is going to auto-redirect to the start page 
     if request.method == "POST":  #Checks if the user POST something in the page (clicked in a button)
         if check_email(request.form.get("email")):
             session["email"] = request.form["email"]
             session["name"] = request.form["username"]  #Store the user Name in a session (temporaly until the user leaves the browser or click in the logout button)
-            return redirect(url_for("start"))  #When the name is stored in the session, its redirect to the start page
+            return redirect(url_for("start"))  #When the name is stored in the session, its redirect to the start page 
         else:
             flash("Your email is not valid.", "+info")
             return redirect(url_for("home"))
@@ -53,6 +53,12 @@ def start():
 
     else:  #If the user is not in the session is going to be redirect to the home page
         return redirect(url_for("home"))  #redirecting to the home page
+
+#@app.route("/choice", methods=["POST", "GET"])  #The start page is going to work with POST request so is needed to add the POST method
+#def choice_for_option():
+#if request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
+#if request.form.get("submit_button1") == "The Most Suitable Cocktail":  #Checks if the user clicked in the logout button(In the html with the name "logout_button")
+#return render_template("start.html")
 
 @app.route("/logout")  #logout page, this page doesnt have html file because the user never is going to see this page, is auto-redirect to the home page
 def logout():
