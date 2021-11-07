@@ -41,9 +41,8 @@
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
     <div style="text-align: center;" class="textBlock3">
         <h2>Your cocktail is:</h2>
-         <p>Spirit: {{session["flav0"]}}</p>
-         <p>Juice: {{session["flav1"]}}</p>
-          
+         <p>Name: {{session["flav0"]}}</p> <!-- need to change to a cocktail name argument from the function -->
+          <!-- I will also add all html stuff like cocktail picture and ingredients later -->
         <form action="#" method="post"> <!-- creating a action with the "post" method -->
             <button class="button" name="logout_button" value="logout">Logout</button> <!-- button to submit the "logout" value for the user to logout -->
         </form> 
