@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+    <title>Home</title>
+    <style type="text/css">
+        .textBlock5 {
+         width: 400px;
+         font-family: Verdana, sans-serif;
+         background-color: #FBF7F1;
+         color: #05241C;
+         padding: 5px;
+         padding-right: 35px;
+         padding-left: 35px;
+         padding-bottom: 35px;
+         padding-top: 25px;
+         opacity: 0.87;
+         border-radius: 50px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-top: 70px;
+        }
+        .button {
+                width: 150px;
+                border: none;
+                border-radius: 5px;
+                color: #FBF7F1;;
+                background-color: #44ad97;  
+                text-align: center;
+                font-size: 15px;
+                padding: 10px 10px;
+                margin: 3px 2px;
+                display: inline-block;
+                cursor: pointer;
+                }
+                .button:hover {
+                border-radius: 5px; 
+                background-color: rgb(47, 116, 98);
+                color: #FBF7F1;
+                }
+         </style>
+         
+</head>
+<body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
+    <div style="text-align: center;" class="textBlock5">
+        <h2>{{session["name"]}}, type your preferences:</h2> <!-- uses the user session data, in this case the name -->
+            <form action="#" method="post"> <!-- creating a action with the "post" method -->
+        <p><b>One ingredient: <input type="text" name="flav1" /></b></p> <!-- store the user data in a box text -->
+        <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
+        <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
+         {% block content %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                        <p style='color: #ec4029;'>{{msg}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </form>
+        {% endblock %}
+    </div>
+</body>
+</html>
