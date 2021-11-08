@@ -20,23 +20,23 @@
          margin-top: 70px;
         }
         .button {
-                width: 150px;
-                border: none;
-                border-radius: 5px;
-                color: #FBF7F1;;
-                background-color: #44ad97;  
-                text-align: center;
-                font-size: 15px;
-                padding: 10px 10px;
-                margin: 3px 2px;
-                display: inline-block;
-                cursor: pointer;
-                }
-                .button:hover {
-                border-radius: 5px; 
-                background-color: rgb(47, 116, 98);
-                color: #FBF7F1;
-                }
+         width: 150px;
+         border: none;
+         border-radius: 5px;
+         color: #FBF7F1;;
+         background-color: #44ad97;  
+         text-align: center;
+         font-size: 15px;
+         padding: 10px 10px;
+         margin: 3px 2px;
+         display: inline-block;
+         cursor: pointer;
+        }
+        .button:hover {
+         border-radius: 5px; 
+         background-color: rgb(47, 116, 98);
+         color: #FBF7F1;
+        }
          </style>
          
 </head>
@@ -50,6 +50,7 @@
             <form action="#" method="post"> <!-- creating a action with the "post" method -->
         <p><b>Spirit: <input type="text" name="flav1" /></b></p> <!-- store the user data in a box text -->
         <p><b>Juice: <input type="text" name="flav2" /></b></p> <!-- store the user data in a box text -->
+        <p><b>Smt else: <input type="text" name="flav3" /></b></p> <!-- store the user data in a box text -->
         <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
         <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
          {% block content %}

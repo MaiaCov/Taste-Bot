@@ -79,7 +79,8 @@ def flavour():
             if request.form.get("flav1").split() and request.form.get("flav2").split(): # and request.form.get("flav3").split():
                 session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
                 session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
-                session["result"] = flavor_cocktail(session["flav0"], session["flav1"])
+                session["flav2"] = request.form.get("flav3")  #store the user flavor2 in the session
+                session["result"] = flavor_cocktail(session["flav0"], session["flav1"], session["flav2"])
                  # session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
                 return redirect(url_for("finish"))  #redirect the user to the /finish page
             else:
