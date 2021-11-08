@@ -44,7 +44,8 @@
     <div style="text-align: center;" class="textBlock5">
         <h2>{{session["name"]}}, type your preferences:</h2> <!-- uses the user session data, in this case the name -->
         <form action="#" method="post"> <!-- creating a action with the "post" method -->
-            <p><b>One ingredient: <input type="text" name="flav1" /></b></p> <!-- store the user data in a box text -->
+            <p style=" color: #1b6653; font-size: 14pt" ><b>One ingredient:</b></p> 
+            <p><input type="text" name="flav1" /></p> <!-- store the user data in a box text -->
             <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
             <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
             {% block content %}

@@ -46,6 +46,7 @@ def choice():
 @app.route("/random", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
 def random():
     if request.method == "POST":
+        session["flav0"] = "teste"
         session["result"] = random_cocktail()
         return redirect(url_for("finish"))
     elif session["choice"]:

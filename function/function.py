@@ -39,8 +39,9 @@ def non_alco_cocktail(flav1): # maybe add search by at least one word like 'coff
            if  type(drink["strIngredient5"]) != type(None):
               ingredients = ingredients + ", " + (drink["strIngredient5"])
     picture = drink["strDrinkThumb"] 
-    picture= picture.replace('"', '')          
-    result = drink["strDrink"], ingredients, picture
+    picture= picture.replace('"', '')    
+    name = '"' + drink["strDrink"] + '"'    
+    result = name, ingredients, picture
     return result
 
 def random_cocktail():
@@ -57,7 +58,8 @@ def random_cocktail():
     #drink = drink["strDrink"] + drink["idDrink"] + ingredients
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')          
-    result = drink["strDrink"], ingredients, picture
+    name = '"' + drink["strDrink"] + '"'    
+    result = name, ingredients, picture
     return result
     
 
@@ -85,7 +87,8 @@ def flavor_cocktail(flav1, flav2):
               ingredients = ingredients + ", " + (drink["strIngredient5"])
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')          
-    result = drink["strDrink"], ingredients, picture
+    name = '"' + drink["strDrink"] + '"'    
+    result = name, ingredients, picture
     return (result)
 
     # line 75: ina = '"' + (f"strIngredient{a}") + '"' and all this put to a loop, don't know is it possible
