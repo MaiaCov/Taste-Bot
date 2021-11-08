@@ -46,8 +46,7 @@ def choice():
 @app.route("/random", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
 def random():
     if request.method == "POST":
-        data = random_cocktail()
-        session["flav0"] = "teste" #need the code to add the flav the API pulled
+        session["result"] = random_cocktail()
         return redirect(url_for("finish"))
     elif session["choice"]:
         return render_template("random.html")
@@ -65,6 +64,7 @@ def nonAlco():
         elif request.form.get("submit_button") == "submit":  #Checks ift the user clicked in the submit button(In the html with the name "submit_button")
                 if request.form.get("flav1").split(): # and request.form.get("flav3").split():
                     session["flav0"] = request.form.get("flav1")
+                    session["result"] = non_alco_cocktail(session["flav0"])
                     return redirect(url_for("finish"))
     else:
         return render_template("nonalco.html")
@@ -78,7 +78,8 @@ def flavour():
             if request.form.get("flav1").split() and request.form.get("flav2").split(): # and request.form.get("flav3").split():
                 session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
                 session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
-                # session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
+                session["result"] = flavor_cocktail(session["flav0"], session["flav1"])
+                 # session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
                 return redirect(url_for("finish"))  #redirect the user to the /finish page
             else:
                 flash("Write in all parameters.", "+info")

@@ -11,7 +11,7 @@ def check_email(email):
     else:
         return False
 
-def nonAlcoCocktail(flav1): # maybe add search by at least one word like 'coffee'?
+def non_alco_cocktail(flav1): # maybe add search by at least one word like 'coffee'?
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
     dataNonAlco = requests.get('https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').json() # getting data from the second database
     drinkByFlav = []
@@ -38,7 +38,9 @@ def nonAlcoCocktail(flav1): # maybe add search by at least one word like 'coffee
            ingredients = ingredients + ", " + (drink["strIngredient4"])
            if  type(drink["strIngredient5"]) != type(None):
               ingredients = ingredients + ", " + (drink["strIngredient5"])
-    result = drink["strDrink"], ingredients
+    picture = drink["strDrinkThumb"] 
+    picture= picture.replace('"', '')          
+    result = drink["strDrink"], ingredients, picture
     return result
 
 def random_cocktail():
@@ -53,7 +55,9 @@ def random_cocktail():
            if  type(drink["strIngredient5"]) != type(None):
                ingredients = ingredients + ", " + (drink["strIngredient5"])
     #drink = drink["strDrink"] + drink["idDrink"] + ingredients
-    result = drink["strDrink"], ingredients
+    picture = drink["strDrinkThumb"] 
+    picture= picture.replace('"', '')          
+    result = drink["strDrink"], ingredients, picture
     return result
     
 
@@ -79,12 +83,14 @@ def flavor_cocktail(flav1, flav2):
            ingredients = ingredients + ", " + (drink["strIngredient4"])
            if  type(drink["strIngredient5"]) != type(None):
               ingredients = ingredients + ", " + (drink["strIngredient5"])
-    result = drink["strDrink"], ingredients
+    picture = drink["strDrinkThumb"] 
+    picture= picture.replace('"', '')          
+    result = drink["strDrink"], ingredients, picture
     return (result)
 
     # line 75: ina = '"' + (f"strIngredient{a}") + '"' and all this put to a loop, don't know is it possible
     # a=1 ... and then 2, 3, 4,...
-    
+
     # picture link = ["strDrinkThumb"]
     # drinkGlass = ["strGlass"]
     # drink ID = ["idDrink"]
