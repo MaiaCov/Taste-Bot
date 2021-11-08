@@ -30,9 +30,9 @@ def home():
 
 @app.route("/choice", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
 def choice():
-    if "choice" in session:
-        return redirect(url_for("flavour"))
-    elif request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
+    #if "choice" in session:
+    #    return redirect(url_for("flavour"))
+    if request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
         session["choice"] = request.form.get("submit_button")
         if session["choice"] == "Most":
             return redirect(url_for("flavour"))
@@ -99,6 +99,8 @@ def finish():
     if request.method == "POST":  #checks if the user is sending a POST request (clicked in a button)
         if request.form.get("logout_button") == "logout":  #checks if the user clicked in the logout button
             return redirect(url_for("logout"))  #redirect the user to the logout page
+        if request.form.get("repeat_button") == "repeat":  #checks if the user clicked in the logout button
+            return redirect(url_for("choice"))  #redirect the user to the logout page    
     elif "flav0" in session:
         return render_template("finish.html") 
     else:
