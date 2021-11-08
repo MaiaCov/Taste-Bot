@@ -11,8 +11,7 @@ def check_email(email):
     else:
         return False
 
-def nonAlcoCocktail(): # maybe add search by at least one word like 'coffee'?
-    flav1 = input('Type ingredient 1: ')
+def nonAlcoCocktail(flav1): # maybe add search by at least one word like 'coffee'?
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
     dataNonAlco = requests.get('https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').json() # getting data from the second database
     drinkByFlav = []
@@ -46,7 +45,7 @@ def random_cocktail():
     #print (ingredients)
     data = requests.get('https://thecocktaildb.com/api/json/v1/1/random.php').json() 
     drink = choice(data["drinks"]) 
-    return True
+    return drink
 
 def flavor_cocktail(flav1, flav2):
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json()

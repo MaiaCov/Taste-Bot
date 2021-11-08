@@ -15,12 +15,12 @@ def red():  #red==redirect
 @app.route("/home", methods=["POST", "GET"]) #The methods is needed here because the /home works with POST requests
 def home():
     if "name" in session:  #checks if the user is already in the session
-        return redirect(url_for("choice"))  #if so is going to auto-redirect to the start page 
+        return redirect(url_for("choice"))  #if so is going to auto-redirect to the flavour page 
     if request.method == "POST":  #Checks if the user POST something in the page (clicked in a button)
         if check_email(request.form.get("email")):
             session["email"] = request.form["email"]
             session["name"] = request.form["username"]  #Store the user Name in a session (temporaly until the user leaves the browser or click in the logout button)
-            return redirect(url_for("choice"))  #When the name is stored in the session, its redirect to the start page 
+            return redirect(url_for("choice"))  #When the name is stored in the session, its redirect to the flavour page 
         else:
             flash("Your email is not valid.", "+info")
             return redirect(url_for("home"))
@@ -28,19 +28,49 @@ def home():
         return render_template("index.html")  #render the html file
 
 
-@app.route("/choice", methods=["POST", "GET"])  #The start page is going to work with POST request so is needed to add the POST method
+@app.route("/choice", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
 def choice():
     if "choice" in session:
-        return redirect(url_for("start"))
+        return redirect(url_for("flavour"))
     elif request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
         session["choice"] = request.form.get("submit_button")
-        return redirect(url_for("start"))
+        if session["choice"] == "Most":
+            return redirect(url_for("flavour"))
+        elif session["choice"] == "Random":
+            return redirect(url_for("random"))
+        elif session["choice"] == "Non-Alco":
+            return redirect(url_for("nonAlco"))
     else:
         return render_template("choice.html")
 
+@app.route("/random", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
+def random():
+    if request.method == "POST":
+        data = random_cocktail()
+        session["flav0"] = "teste" #need the code to add the flav the API pulled
+        return redirect(url_for("finish"))
+    elif session["choice"]:
+        return render_template("random.html")
+    else:
+        return redirect(url_for("choice"))
 
-@app.route("/start", methods=["POST", "GET"])  #The start page is going to work with POST request so is needed to add the POST method
-def start():
+
+@app.route("/nonAlco", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
+def nonAlco():
+    if not session["choice"]:
+        return redirect(url_for("home"))
+    if request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
+        if request.form.get("logout_button") == "logout":  #Checks if the user clicked in the logout button(In the html with the name "logout_button")
+            return redirect(url_for("logout"))  #redirect the user to the logout page
+        elif request.form.get("submit_button") == "submit":  #Checks ift the user clicked in the submit button(In the html with the name "submit_button")
+                if request.form.get("flav1").split(): # and request.form.get("flav3").split():
+                    session["flav0"] = request.form.get("flav1")
+                    return redirect(url_for("finish"))
+    else:
+        return render_template("nonalco.html")
+
+@app.route("/flavour", methods=["POST", "GET"])  #The flavour page is going to work with POST request so is needed to add the POST method
+def flavour():
     if request.method == "POST":  #Checks if the user clicked in a button(if the user sends a post request)
         if request.form.get("logout_button") == "logout":  #Checks if the user clicked in the logout button(In the html with the name "logout_button")
             return redirect(url_for("logout"))  #redirect the user to the logout page
@@ -49,28 +79,28 @@ def start():
                 session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
                 session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
                 # session["flav2"] = request.form.get("flav3")  #store the user flavor3 in the session
-                return redirect(url_for("flavour"))  #redirect the user to the /flavour page
+                return redirect(url_for("finish"))  #redirect the user to the /finish page
             else:
                 flash("Write in all parameters.", "+info")
                 return redirect(url_for("home"))
 
     if "name" in session:  #If the user is in the session, is going to render the html file and let the user there
-        return render_template("start.html")  #render the html file
+        return render_template("flavour.html")  #render the html file
 
     else:  #If the user is not in the session is going to be redirect to the home page
         return redirect(url_for("home"))  #redirecting to the home page
 
 
 
-@app.route("/flavour", methods=["POST", "GET"])  #The flavour page needs the "POST" method because was the button to logout
-def flavour():
-    if "flav0" not in session:
-        return redirect(url_for("home"))
+@app.route("/finish", methods=["POST", "GET"])  #The finish page needs the "POST" method because was the button to logout
+def finish():
     if request.method == "POST":  #checks if the user is sending a POST request (clicked in a button)
         if request.form.get("logout_button") == "logout":  #checks if the user clicked in the logout button
             return redirect(url_for("logout"))  #redirect the user to the logout page
+    elif "flav0" in session:
+        return render_template("finish.html") 
     else:
-        return render_template("flavour.html")   #render the html file
+        return redirect(url_for("home")) #render the html file
 
 
 @app.route("/logout")  #logout page, this page doesnt have html file because the user never is going to see this page, is auto-redirect to the home page
@@ -88,5 +118,5 @@ def fail():
 
 
 
-if __name__ == "__main__":  #The webserver starts this way
-    app.run(debug=True)  #webserver starts running with the debug True
+if __name__ == "__main__":  #The webserver flavours this way
+    app.run(debug=True)  #webserver flavours running with the debug True

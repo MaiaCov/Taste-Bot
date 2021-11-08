@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Flavours</title>
     <style type="text/css">
-        .textBlock5 {
+        .textBlock3 {
          width: 400px;
          font-family: Verdana, sans-serif;
          background-color: #FBF7F1;
@@ -11,8 +11,7 @@
          padding: 5px;
          padding-right: 35px;
          padding-left: 35px;
-         padding-bottom: 35px;
-         padding-top: 25px;
+         padding-bottom: 25px;
          opacity: 0.87;
          border-radius: 50px;
          margin-left: auto;
@@ -38,25 +37,22 @@
                 color: #FBF7F1;
                 }
          </style>
-         
 </head>
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
-    <div style="text-align: center;" class="textBlock5">
-        <h2>{{session["name"]}}, type your preferences:</h2> <!-- uses the user session data, in this case the name -->
-        <form action="#" method="post"> <!-- creating a action with the "post" method -->
-            <p><b>One ingredient: <input type="text" name="flav1" /></b></p> <!-- store the user data in a box text -->
-            <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
-            <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
-            {% block content %}
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for msg in messages %}
-                            <p style='color: #ec4029;'>{{msg}}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-        </form>
+    <div style="text-align: center;" class="textBlock3">
+        <h2>Your cocktail is:</h2>
+         <p>Name: Missing code</p> <!-- need to change to a cocktail name argument from the function -->
+         <p>flavour: {{session["flav0"]}}</p>
+         {% block content %}
+            {% if session["flav1"] %}
+                <p>flavour: {{session["flav1"]}}</p>
+            {% endif %}
         {% endblock %}
+         <p>choice: {{session["choice"]}}</p>
+         <!-- I will also add all html stuff like cocktail picture and ingredients later -->
+        <form action="#" method="post"> <!-- creating a action with the "post" method -->
+            <button class="button" name="logout_button" value="logout">Logout</button> <!-- button to submit the "logout" value for the user to logout -->
+        </form> 
     </div>
 </body>
 </html>
