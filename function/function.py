@@ -82,10 +82,9 @@ def flavor_cocktail(flav1, flav2):
     result = drink["strDrink"], ingredients
     return (result)
 
-    # ina = '"' + (f"strIngredient{a}") + '"'
+    # line 75: ina = '"' + (f"strIngredient{a}") + '"' and all this put to a loop, don't know is it possible
     # a=1 ... and then 2, 3, 4,...
+    
     # picture link = ["strDrinkThumb"]
     # drinkGlass = ["strGlass"]
     # drink ID = ["idDrink"]
-
-    return True
