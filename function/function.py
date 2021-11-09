@@ -57,13 +57,16 @@ def flavor_cocktail(flav1, flav2, flav3):
         moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
         if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
             if flav3 == (moreData["drinks"][0])["strIngredient1"] or flav3 == (moreData["drinks"][0])["strIngredient2"] or flav3 == (moreData["drinks"][0])["strIngredient3"] or flav3 == (moreData["drinks"][0])["strIngredient4"] or flav3 == (moreData["drinks"][0])["strIngredient5"] or flav3 == (moreData["drinks"][0])["strIngredient6"]:
-                finalDrinkOptions1.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-            else:
                 finalDrinkOptions2.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-    if finalDrinkOptions2 != None:
+            else:
+                finalDrinkOptions1.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
+            
+    if finalDrinkOptions2 != '':
+        # print("all 3 flavours used")
         drinkID = choice(finalDrinkOptions2)  # random choice of final drink from all options that was found
-    elif finalDrinkOptions1 != None:
+    elif finalDrinkOptions1 != '':
         drinkID = choice(finalDrinkOptions1)  # random choice of final drink from all options that was found
+        # print("2 flavours used")
     else:
         result = (data["drinks"])["strDrink"], ingredients_in_list(data["drinks"])[0], (data["drinks"])["strDrinkThumb"]
         return  result
@@ -72,7 +75,7 @@ def flavor_cocktail(flav1, flav2, flav3):
     drink = (moreData["drinks"])[0]
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
-    name = '"' + drink["strDrink"] + '"'    
+    name = '"' + drink["strDrink"] + '"'      
     result = name, ingredients_in_list(drink), picture
     return (result)
 
