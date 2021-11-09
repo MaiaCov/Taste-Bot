@@ -124,3 +124,5 @@ def fail():
 
 if __name__ == "__main__":  #The webserver flavours this way
     app.run(debug=True)  #webserver flavours running with the debug True
+
+#teste
