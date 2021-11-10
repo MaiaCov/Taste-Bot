@@ -108,7 +108,10 @@ def finish():
              return redirect(url_for("random"))
             elif session["choice"] == "Non-Alco":
                 return redirect(url_for("nonAlco"))
-        return redirect(url_for("choice"))  # redirect the user to the logout page when he clicks 'back'    
+        if request.form.get("back_button") == "back":
+            return redirect(url_for("choice"))  # redirect the user to the choice page when he clicks 'back'
+        if request.form.get("chat_button") == "chat":
+            pass  # SHOULD !! redirect the user to the chat page when he clicks 'chat'    
     # elif "flav0" in session:
     return render_template("finish.html") 
     # else:
