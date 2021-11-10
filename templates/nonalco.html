@@ -44,18 +44,19 @@
     <div style="text-align: center;" class="textBlock5">
         <h2>{{session["name"]}}, type your preferences:</h2> <!-- uses the user session data, in this case the name -->
         <form action="#" method="post"> <!-- creating a action with the "post" method -->
-            <p style=" color: #1b6653; font-size: 14pt" ><b>One ingredient:</b></p> 
+            <p style=" color: #1b6653; font-size: 13pt" ><b>One ingredient:</b></p> 
             <p><input type="text" name="flav1" /></p> <!-- store the user data in a box text -->
-            <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
-            <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
             {% block content %}
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
                         {% for msg in messages %}
-                            <p style='color: #ec4029;'>{{msg}}</p>
+                            <p style='color: #ca3a27;'>{{msg}}</p>
                         {% endfor %}
                     {% endif %}
                 {% endwith %}
+            <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
+            <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
+            
         </form>
         {% endblock %}
     </div>

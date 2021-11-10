@@ -17,7 +17,7 @@
          border-radius: 50px;
          margin-left: auto;
          margin-right: auto;
-         margin-top: 70px;
+         margin-top: 50px;
         }
         .button {
          width: 150px;
@@ -53,16 +53,16 @@
         <p style="font-size: 12px"><i>Juice e.g. Orange/Lime juice</i></p>
         <p style="font-size: 12px"><i>Grenadine, Sugar</i></p>
         <hr style="width:300px;text-align:centre;">
+        {% block content %}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                    <p style='color: #ec4029;'>{{msg}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
         <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
-         {% block content %}
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for msg in messages %}
-                        <p style='color: #ec4029;'>{{msg}}</p>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
         </form>
         {% endblock %}
     </div>
