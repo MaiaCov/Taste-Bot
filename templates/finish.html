@@ -6,19 +6,20 @@
         .textBlock3 {
          width: 400px;
          font-family: Verdana, sans-serif;
+         font-size: 14px;
          background-color: #FBF7F1;
          color: #05241C;
          padding: 5px;
-         padding-right: 35px;
-         padding-left: 35px;
+         padding-right: 45px;
+         padding-left: 45px;
          padding-bottom: 25px;
          opacity: 0.87;
          border-radius: 50px;
          margin-left: auto;
          margin-right: auto;
-         margin-top: 70px;
+         margin-top: 45px;
         }
-        .button {
+        .button1 {
         width: 150px;
         border: none;
         border-radius: 5px;
@@ -29,11 +30,29 @@
         padding: 10px 10px;
         margin: 3px 2px;
         display: inline-block;
-        cursor: pointer;
+        cursor: pointer; 
         }
-        .button:hover {
+        .button1:hover {
         border-radius: 5px; 
         background-color: rgb(47, 116, 98);
+        color: #FBF7F1;
+        }
+        .button2 {
+        width: 80px;
+        border: none;
+        border-radius: 5px;
+        color: #FBF7F1;;
+        background-color: #193b34;  
+        text-align: center;
+        font-size: 13px;
+        padding: 10px 10px;
+        margin-top: 10px;
+        display: inline;
+    
+        }
+        .button2:hover {
+        border-radius: 5px; 
+        background-color: rgb(28, 29, 29);
         color: #FBF7F1;
         }
     </style>
@@ -41,9 +60,10 @@
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
     <div style="text-align: center;" class="textBlock3">
         <h2> Your cocktail is:</h2>
-         <p style= "font-size: 20px">Name:<b> {{session["result"][0][0]}}</b></p> <!-- need to change to a cocktail name argument from the function -->
+         <p style= "font-size: 18px"><b> {{session["result"][0][0]}}</b></p> <!-- need to change to a cocktail name argument from the function -->
          <img src= "{{session["result"][0][2]}}" width="200" height="200" >
          <p>Ingredients:<i> {{session["result"][0][1]}}</i></p>
+         <p style= "font-size: 13px">Flavors used:<i> {{session["result"][1]}}</i></p>
         <!--<p>flavour: {{session["flav0"]}}</p>  -->
         <!-- {% block content %} -->
         <!--    {% if session["flav1"] %} -->
@@ -53,8 +73,10 @@
         <!-- <p>choice: {{session["choice"]}}</p> -->
          <!-- I will also add all html stuff like cocktail picture and ingredients later -->
         <form action="#" method="post"> <!-- creating a action with the "post" method -->
-            <button class="button" name="logout_button" value="logout">Logout</button> <!-- button to submit the "logout" value for the user to logout -->
-            <button class="button" name="repeat_button" value="repeat">Repeat</button> <!-- button to submit the "logout" value for the user to logout -->
+            <button class="button1" name="logout_button" value="logout">Logout</button> <!-- button to submit the "logout" value for the user to logout -->
+            <button class="button1" name="repeat_button" value="repeat">Repeat</button> <br> <!-- button to submit the "logout" value for the user to logout -->
+            <button class="button2" name="back_button" value="back" >Back</button>
+            <button class="button2" name="back_button" value="back" >Chat</button>
         </form> 
     </div>
 </body>
