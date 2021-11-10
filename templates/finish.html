@@ -41,9 +41,9 @@
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
     <div style="text-align: center;" class="textBlock3">
         <h2> Your cocktail is:</h2>
-         <p style= "font-size: 20px">Name:<b> {{session["result"][0]}}</b></p> <!-- need to change to a cocktail name argument from the function -->
-         <img src= "{{session["result"][2]}}" width="200" height="200" >
-         <p>Ingredients:<i> {{session["result"][1]}}</i></p>
+         <p style= "font-size: 20px">Name:<b> {{session["result"][0][0]}}</b></p> <!-- need to change to a cocktail name argument from the function -->
+         <img src= "{{session["result"][0][2]}}" width="200" height="200" >
+         <p>Ingredients:<i> {{session["result"][0][1]}}</i></p>
         <!--<p>flavour: {{session["flav0"]}}</p>  -->
         <!-- {% block content %} -->
         <!--    {% if session["flav1"] %} -->

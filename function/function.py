@@ -50,41 +50,49 @@ def flavor_cocktail(flav1, flav2, flav3):
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json()
     lengh = len(data["drinks"])
     i=0
-    finalDrinkOptions1 = []
-    finalDrinkOptions2 = []
-    if flav2 == None:
-        picture = (data["drinks"])["strDrinkThumb"] 
-        picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
-        name = '"' + (data["drinks"])["strDrink"] + '"'      
-        result = name, ingredients_in_list(data["drinks"]), picture
-    elif flav2 != None:
+    number_of_flav = 3  # varible to count number of flavors used to generate the drink (sometimes we don't have drink with one of typed flavours)
+    finalDrinkOptions = []  # list to store suitable drink options
+    if (flav2 != None) and (flav3 != None):  # First case, then we have all three flavours typed
         for i in range (lengh):
             # drink ID = (data["drinks"][i])["idDrink"]
             moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
             if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
-                if flav3 != None:
-                    if flav3 == (moreData["drinks"][0])["strIngredient1"] or flav3 == (moreData["drinks"][0])["strIngredient2"] or flav3 == (moreData["drinks"][0])["strIngredient3"] or flav3 == (moreData["drinks"][0])["strIngredient4"] or flav3 == (moreData["drinks"][0])["strIngredient5"] or flav3 == (moreData["drinks"][0])["strIngredient6"]:
-                        finalDrinkOptions2.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-                else:
-                    finalDrinkOptions1.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-
-        if finalDrinkOptions2 != '':
-            # print("all 3 flavours used")
-            drinkID = choice(finalDrinkOptions2)  # random choice of final drink from all options that was found
-        elif finalDrinkOptions1 != '':
-            drinkID = choice(finalDrinkOptions1)  # random choice of final drink from all options that was found
-            # print("2 flavours used")
+                if flav3 == (moreData["drinks"][0])["strIngredient1"] or flav3 == (moreData["drinks"][0])["strIngredient2"] or flav3 == (moreData["drinks"][0])["strIngredient3"] or flav3 == (moreData["drinks"][0])["strIngredient4"] or flav3 == (moreData["drinks"][0])["strIngredient5"] or flav3 == (moreData["drinks"][0])["strIngredient6"]:
+                    finalDrinkOptions.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
+        if  finalDrinkOptions != []:
+            drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
         else:
-            result = (data["drinks"])["strDrink"], ingredients_in_list(data["drinks"])[0], (data["drinks"])["strDrinkThumb"]
-            return  result
-        drinkID = drinkID.replace('"', '')  # deleting the " because we need only numbers to them in the link below
-        moreData = requests.get(f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={drinkID}').json()
-        drink = (moreData["drinks"])[0]
+            number_of_flav = 2
+            flav3 = None
+            moreData = None
+    if (flav2 != None) and (flav3 == None): # Second case, we have only two flavours typed
+        for i in range (lengh):
+            # drink ID = (data["drinks"][i])["idDrink"]
+            moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
+            if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
+                finalDrinkOptions.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
+        if  finalDrinkOptions != []:
+            drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
+        else:
+            number_of_flav = 1
+            flav2 = None
+    if (flav2 == None) and (flav3 == None):
+        drink = (data["drinks"])[0]
         picture = drink["strDrinkThumb"] 
         picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
         name = '"' + drink["strDrink"] + '"'      
-        result = name, ingredients_in_list(drink), picture
-    return (result)
+        result = name,ingredients_in_list(drink), picture
+        return (result, number_of_flav)   # function 'ingredients_in_list' is storing ingredients to the list
+    
+    if finalDrinkOptions != []:
+        drinkID = drinkID.replace('"', '')  # deleting the " because we need only numbers to them in the link below
+        finalData = requests.get(f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={drinkID}').json()
+        drink = (finalData["drinks"])[0]
+        picture = drink["strDrinkThumb"] 
+        picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
+        name = '"' + drink["strDrink"] + '"'      
+        result = name,ingredients_in_list(drink), picture 
+        return (result, number_of_flav)
 
 def ingredients_in_list(drink):
     ingredients = drink["strIngredient1"] + ", " + drink["strIngredient2"] 
