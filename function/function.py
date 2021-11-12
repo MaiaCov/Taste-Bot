@@ -14,6 +14,15 @@ def check_email(email):
     else:
         return False
 
+def check_ingr(flav):
+    data = requests.get(f"https://www.thecocktaildb.com/api/json/v1/1/search.php?i={flav.sp}").json()
+    if data['ingredients'] == None:
+        print("Return False")
+        return False
+    else:
+        print("Return True")
+        return True
+
 def non_alco_cocktail(flav1): 
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
     dataNonAlco = requests.get('https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').json() # getting data from the second database
