@@ -37,14 +37,42 @@
          background-color: rgb(47, 116, 98);
          color: #FBF7F1;
         }
+        .button:focus {
+         border-radius: 5px; 
+         background-color: rgb(47, 116, 98);
+         color: #FBF7F1;
+        }
+       
+        #spinner {
+        display: none;
+        }
+
+         @keyframes spinner {
+            to {transform: rotate(360deg);}
+        }
+        .loading {
+         content: '';
+         box-sizing: border-box;
+         position: absolute;
+         top: 40%;
+         left: 49%;
+         width: 60px;
+         height: 60px;
+         margin-top: -10px;
+         margin-left: -10px;
+         border-radius: 50%;
+         border: 3px solid rgb(211, 214, 214);
+         border-top-color: rgb(47, 116, 98);
+         animation: spinner .7s linear infinite;
+        }
          </style>
          
 </head>
 <body style = "background: url(https://pikwizard.com/photos/glass-drink-alcohol--a86a9680878850066834814d5d46a3c2-m.jpg); background-size: 100%;">
     <div style="text-align: center;" class="textBlock2">
         <h2>{{session["name"]}}, type <u>at least one</u> your preference:</h2> <!-- uses the user session data, in this case the name -->
-            <form action="#" method="post"> <!-- creating a action with the "post" method -->
-        <p><b>1 <input type="text" name="flav1" style="text-align: center;"/></b></p> <!-- store the user data in a box text -->
+        <form action="#" method="post"> <!-- creating a action with the "post" method -->
+        <p><b>1  <input type="text" name="flav1" style="text-align: center;"/></b></p> <!-- store the user data in a box text -->
         <p><b>2  <input type="text" name="flav2" placeholder="Optional" style="text-align: center;"/></b></p> <!-- store the user data in a box text -->
         <p><b>3  <input type="text" name="flav3" placeholder="Optional" style="text-align: center;" /></b></p> <!-- store the user data in a box text -->
         <hr style="width:300px;text-align:centre;">
@@ -61,10 +89,19 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <button class="button" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
+        <button class="button sbtn btn btn-secondary btn-c" onclick="spinner()" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
         <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
+        <div class="loader">
+            <div id="spinner" class="loading">
+        </div>
         </form>
+        
         {% endblock %}
     </div>
+<script type="text/javascript">
+    function spinner() {
+        document.getElementById("spinner").style.display = "block";
+    }
+</script>
 </body>
 </html>
