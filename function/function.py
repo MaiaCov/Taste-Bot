@@ -11,6 +11,15 @@ def check_email(email):
     else:
         return False
 
+def check_ingr(flav):
+    data = requests.get(f"https://www.thecocktaildb.com/api/json/v1/1/search.php?i={flav.sp}").json()
+    if data['ingredients'] == None:
+        print("Return False")
+        return False
+    else:
+        print("Return True")
+        return True
+
 def non_alco_cocktail(flav1): 
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
     dataNonAlco = requests.get('https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').json() # getting data from the second database
@@ -42,43 +51,46 @@ def random_cocktail():
     number_of_flav = 0
     return (result, number_of_flav)
 
-def flavor_cocktail(flav1, flav2, flav3):
-    data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json()
-    finalDrinkOptions = []  # list to store suitable drink options
-    number_of_flav = 0  # varible to count number of flavors used to generate the drink (sometimes we don't have drink with one of typed flavours)
-    if (flav2 != ''):  # in case that we have only one typed flavor
-        i=0
-        lengh = len(data["drinks"])
-        if (flav2 != '') and (flav3 != ''):  # First case, then we have all three flavours typed
-            for i in range (lengh):
-                # drink ID = (data["drinks"][i])["idDrink"]
-                moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
-                if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
-                    if flav3 == (moreData["drinks"][0])["strIngredient1"] or flav3 == (moreData["drinks"][0])["strIngredient2"] or flav3 == (moreData["drinks"][0])["strIngredient3"] or flav3 == (moreData["drinks"][0])["strIngredient4"] or flav3 == (moreData["drinks"][0])["strIngredient5"] or flav3 == (moreData["drinks"][0])["strIngredient6"]:
+def flavor_cocktail(flav1, flav2=None, flav3=None):
+    if check_ingr(flav1)==False:
+        return None
+    else:
+        data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json()
+        finalDrinkOptions = []  # list to store suitable drink options
+        number_of_flav = 0  # varible to count number of flavors used to generate the drink (sometimes we don't have drink with one of typed flavours)
+        if (flav2 != ''):  # in case that we have only one typed flavor
+            i=0
+            lengh = len(data["drinks"])
+            if (flav2 != '') and (flav3 != ''):  # First case, then we have all three flavours typed
+                for i in range (lengh):
+                    # drink ID = (data["drinks"][i])["idDrink"]
+                    moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
+                    if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
+                        if flav3 == (moreData["drinks"][0])["strIngredient1"] or flav3 == (moreData["drinks"][0])["strIngredient2"] or flav3 == (moreData["drinks"][0])["strIngredient3"] or flav3 == (moreData["drinks"][0])["strIngredient4"] or flav3 == (moreData["drinks"][0])["strIngredient5"] or flav3 == (moreData["drinks"][0])["strIngredient6"]:
+                            finalDrinkOptions.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
+                if  finalDrinkOptions != []:
+                    number_of_flav = 3
+                    drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
+                else:
+                    number_of_flav = 2
+                    flav3 = ''
+                    moreData = None
+            if (flav2 != '') and (flav3 == ''): # Second case, we have only two flavours typed
+                for i in range (lengh):
+                    # drink ID = (data["drinks"][i])["idDrink"]
+                    moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
+                    if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
                         finalDrinkOptions.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-            if  finalDrinkOptions != []:
-                number_of_flav = 3
-                drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
-            else:
-                number_of_flav = 2
-                flav3 = ''
-                moreData = None
-        if (flav2 != '') and (flav3 == ''): # Second case, we have only two flavours typed
-            for i in range (lengh):
-                # drink ID = (data["drinks"][i])["idDrink"]
-                moreData = requests.get (f'https://thecocktaildb.com/api/json/v1/1/lookup.php?i={(data["drinks"][i])["idDrink"]}').json()
-                if flav2 == (moreData["drinks"][0])["strIngredient1"] or flav2 == (moreData["drinks"][0])["strIngredient2"] or flav2 == (moreData["drinks"][0])["strIngredient3"] or flav2 == (moreData["drinks"][0])["strIngredient4"] or flav2 == (moreData["drinks"][0])["strIngredient5"] or flav2 == (moreData["drinks"][0])["strIngredient6"]:
-                    finalDrinkOptions.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
-            if  finalDrinkOptions != []:
-                number_of_flav = 2
-                drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
-            else:
-                number_of_flav = 1
-                flav2 = ''
-    if finalDrinkOptions == []:
-        number_of_flav = 1
-        drinkID = choice(data["drinks"]) ["idDrink"]
-    return result_data(drinkID, number_of_flav) # function 'ingredients_in_list' is storing ingredients to the list
+                if  finalDrinkOptions != []:
+                    number_of_flav = 2
+                    drinkID = choice(finalDrinkOptions)  # random choice of final drink from all options that was found
+                else:
+                    number_of_flav = 1
+                    flav2 = ''
+        if finalDrinkOptions == []:
+            number_of_flav = 1
+            drinkID = choice(data["drinks"]) ["idDrink"]
+        return result_data(drinkID, number_of_flav) # function 'ingredients_in_list' is storing ingredients to the list
 
 def ingredients_in_list(drink):
     ingredients = drink["strIngredient1"] + ", " + drink["strIngredient2"] 
