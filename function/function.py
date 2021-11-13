@@ -14,14 +14,14 @@ def check_email(email):
     else:
         return False
 
-def check_ingr(flav):
-    data = requests.get(f"https://www.thecocktaildb.com/api/json/v1/1/search.php?i={flav.sp}").json()
-    if data['ingredients'] == None:
-        print("Return False")
-        return False
-    else:
-        print("Return True")
-        return True
+# def check_ingr(flav):
+#     data = requests.get(f"https://www.thecocktaildb.com/api/json/v1/1/search.php?i={flav.sp}").json()
+#     if data['ingredients'] == None:
+#         print("Return False")
+#         return False
+#     else:
+#         print("Return True")
+#         return True
 
 def non_alco_cocktail(flav1): 
     data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
@@ -73,7 +73,6 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
     error_text = []
     search_ingredients = []
     matching_drinks = {}
-    list_of_ing = ''
     flavours_used = 0
 
     seconds_elapsed = time.time_ns() # just for me to see to speed of function :)
@@ -82,7 +81,7 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
         response = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={i}')
         if response.content:  # if there are cocktails with this ingredient in database
             drinks = response.json()["drinks"]
-            error_text.append(f'Found {len(drinks)} drinks with {i}')  # how much drink we have we this flavour
+            # error_text.append(f'Found {len(drinks)} drinks with {i}')  # how much drink we have we this flavour
             data.append(drinks)
             search_ingredients.append(i) # storing ingredient's names in order to use later
         else:
@@ -91,10 +90,7 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
     if not data:  # if there are not cocktails with any of typed ingredients 
         # print('No drinks matching any of ingredients')
         return False
-    else:
-        for r in error_text: 
-            print(r)
-
+    
     ids = []  # list to search all matching drink options by ID
 
     for drinks_list in data:  # storing all the three lists with drink's options to new list, in order to find all matches
@@ -144,7 +140,7 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
     picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
     name = '"' + drink["strDrink"] + '"'  
     result_data = name,ingredients_in_list(drink),picture
-    return (result_data, flavours_used)
+    return (result_data, flavours_used, error_text)
 
 
 def ingredients_in_list(drink):
