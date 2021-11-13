@@ -79,11 +79,24 @@ def flavour():
             return redirect(url_for("logout"))  #redirect the user to the logout page
         elif request.form.get("submit_button") == "submit":  #Checks ift the user clicked in the submit button(In the html with the name "submit_button")
             if request.form.get("flav1").split(): # and request.form.get("flav3").split():
-                session["flav0"] = request.form.get("flav1")  #store the user flavor1 in the session
-                session["flav1"] = request.form.get("flav2")  #store the user flavor2 in the session
-                session["flav2"] = request.form.get("flav3")  #store the user flavor2 in the session
+                session["flav0"] = request.form.get("flav1").strip()  #store the user flavor1 in the session
+                session["flav1"] = request.form.get("flav2").strip()  #store the user flavor2 in the session
+                session["flav2"] = request.form.get("flav3").strip()  #store the user flavor2 in the session
                 session["result"] = flavor_cocktail(session["flav0"], session["flav1"], session["flav2"])
-                return redirect(url_for("finish"))  #redirect the user to the /finish page
+                if session["result"]:
+                    if session["result"][2]:
+                        flash("Not all ingredients used! " "Only: " + str(session["result"][1]) , "+info")
+                    return redirect(url_for("finish"))  #redirect the user to the /finish page
+                else:
+                    flash("Cocktail not found", "+info")
+                    return redirect(url_for("flavour"))
+
+                # if check_ingr(session["flav0"]):
+                #     session["result"] = flavor_cocktail(session["flav0"], session["flav1"], session["flav2"])
+                #     return redirect(url_for("finish"))  #redirect the user to the /finish page
+                # elif check_ingr(session["flav0"]) == False:
+                #     flash("Ingredient not found", "+info")
+                #     return redirect(url_for("flavour"))
             else:
                 flash("Write one ingredient", "+info")
                 return redirect(url_for("flavour"))
