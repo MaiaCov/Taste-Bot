@@ -24,14 +24,20 @@ def check_email(email):
 #         return True
 
 def non_alco_cocktail(flav1): 
-    data = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}').json() # getting data from the first database
+    error_text = []
+    data = []
+    response = requests.get(f'https://thecocktaildb.com/api/json/v1/1/filter.php?i={flav1}') # getting data from the first database
+    if response.content:  # if there are cocktails with this ingredient in database
+           data = response.json()
+    else:
+        error_text.append(f'No drinks with {flav1}')  # we can use "result" to if there is no cocktail with some flavour 
+        return False
+
     dataNonAlco = requests.get('https://thecocktaildb.com/api/json/v1/1/filter.php?a=Non_Alcoholic').json() # getting data from the second database
     drinkByFlav = []
     drinkByAlco = []
     number_of_flav= 1
     lengh = len(data["drinks"])
-    if lengh == 0:
-        return False
     i=0
     for i in range (lengh): # storing all drinks id data to the list
         drinkByFlav.append(json.dumps((data["drinks"][i])["idDrink"], indent=4))
@@ -39,10 +45,12 @@ def non_alco_cocktail(flav1):
     i=0
     for i in range (lengh): # storing all drinks id data to the list
         drinkByAlco.append(json.dumps((dataNonAlco["drinks"][i])["idDrink"], indent=4))
-    finalDrinkOptions = [x for x in drinkByFlav if x in drinkByAlco]   # finalDrinkOptions = set(drinkByFlav).intersection(drinkByAlco) - I know about this method, but I can't use it due to fron data format on input
-    drinkID = choice(finalDrinkOptions)
-    return result_data(drinkID, number_of_flav)
-    
+    finalDrinkOptions = [x for x in drinkByFlav if x in drinkByAlco]  
+    if finalDrinkOptions:
+        drinkID = choice(finalDrinkOptions)
+        return result_data(drinkID, number_of_flav)
+    else:
+        return False
 
 def random_cocktail():
     data = requests.get('https://thecocktaildb.com/api/json/v1/1/random.php').json() 
@@ -67,7 +75,7 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
     elif flav1!=None and flav2!=None:
         flavours = flav1.strip(),flav2.strip()
     else: # flav1!=None:
-        flavours = flav1.strip(),flav2.strip()
+        flavours = flav1.strip()
 
     data = []
     error_text = []

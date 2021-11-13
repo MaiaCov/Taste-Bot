@@ -66,7 +66,11 @@ def nonAlco():
                 if request.form.get("flav1").split(): # and request.form.get("flav3").split():
                     session["flav0"] = request.form.get("flav1")
                     session["result"] = non_alco_cocktail(session["flav0"])
-                    return redirect(url_for("finish"))
+                    if session["result"]:
+                        return redirect(url_for("finish"))
+                    else:
+                        flash("Cocktail not found", "+info") # flashing message 
+                        return redirect(url_for("nonAlco"))     
                 else:
                     flash("Write one ingredient", "+info") # flashing message 
                     return redirect(url_for("nonAlco"))  
