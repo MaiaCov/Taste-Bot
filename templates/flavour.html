@@ -75,12 +75,6 @@
         <p><b>1  <input type="text" name="flav1" style="text-align: center;"/></b></p> <!-- store the user data in a box text -->
         <p><b>2  <input type="text" name="flav2" placeholder="Optional" style="text-align: center;"/></b></p> <!-- store the user data in a box text -->
         <p><b>3  <input type="text" name="flav3" placeholder="Optional" style="text-align: center;" /></b></p> <!-- store the user data in a box text -->
-        <hr style="width:300px;text-align:centre;">
-        <p style="font-size: 12px"><i>Examples:</i></p>
-        <p style="font-size: 12px"><i>Spirits e.g. Vodka/White Rum/Tequila/Gin</i></p>
-        <p style="font-size: 12px"><i>Juice e.g. Orange/Lime juice</i></p>
-        <p style="font-size: 12px"><i>Grenadine, Sugar</i></p>
-        <hr style="width:300px;text-align:centre;">
         {% block content %}
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -89,6 +83,12 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
+        <hr style="width:300px;text-align:centre;">
+        <p style="font-size: 12px"><i>Examples:</i></p>
+        <p style="font-size: 12px"><i>Spirits e.g. Vodka/White Rum/Tequila/Gin</i></p>
+        <p style="font-size: 12px"><i>Juice e.g. Orange/Lime juice</i></p>
+        <p style="font-size: 12px"><i>Grenadine, Sugar, Milk</i></p>
+        <hr style="width:300px;text-align:centre;">
         <button class="button sbtn btn btn-secondary btn-c" onclick="spinner()" name="submit_button"  value="submit">Submit</button> <!-- submit the user data in the boxes text, the type "text" -->
         <button class="button" name="logout_button" value="logout">Logout</button><!-- button to submit the "logout" value for the user to logout -->
         <div class="loader">
