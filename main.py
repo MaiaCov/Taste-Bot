@@ -1,3 +1,4 @@
+from re import U
 from flask import Flask, redirect, sessions, url_for, render_template, request, session, flash
 import sys 
 import os
@@ -89,7 +90,7 @@ def flavour():
                 session["result"] = flavor_cocktail(session["flav0"], session["flav1"], session["flav2"])
                 if session["result"]:
                     if session["result"][2]:
-                        flash("Not all ingredients used! " "Only: " + str(session["result"][1]) , "+info")
+                        flash(f"Not all ingredients used! " "Only: " + str(session["result"][1]) , "+info")
                     return redirect(url_for("finish"))  #redirect the user to the /finish page
                 else:
                     flash("Cocktail not found", "+info")
@@ -128,13 +129,45 @@ def finish():
         if request.form.get("back_button") == "back":
             return redirect(url_for("choice"))  # redirect the user to the choice page when he clicks 'back'
         if request.form.get("chat_button") == "chat":
-            pass  # SHOULD !! redirect the user to the chat page when he clicks 'chat'    
+            return redirect(url_for("chat"))  # SHOULD !! redirect the user to the chat page when he clicks 'chat'    
     # elif "flav0" in session:
     return render_template("finish.html") 
     # else:
     #   return redirect(url_for("flavour")) #render the html file
 
+@app.route("/chat", methods=["POST", "GET"])
+def chat():
+    if not session["result"]:
+        return redirect(url_for("home"))
+    elif request.method == "POST":
+        if request.form.get("submit_button") == "how":
+            return redirect(url_for("how"))
+        elif request.form.get("submit_button") == "email":  
+            return redirect(url_for("email"))
+        elif request.form.get("submit_button") == "back":
+            return redirect(url_for("choice"))
+    else:
+        return render_template("chat.html")
 
+@app.route("/how", methods=["POST", "GET"])
+def how():
+    if request.method == "POST":
+        if request.form.get("submit_button") == "back":
+            return redirect(url_for("chat"))
+        elif request.form.get("logout_button") == "logout":
+            return redirect(url_for("logout"))
+    else:
+        return render_template("how.html")
+
+@app.route("/email", methods=["POST", "GET"])
+def email():
+    if request.method == "POST":
+        if request.form.get("submit_button") == "back":
+            return redirect(url_for("chat"))
+        elif request.form.get("logout_button") == "logout":
+            return redirect(url_for("logout"))
+    else:
+        return render_template("email.html")
 @app.route("/logout")  #logout page, this page doesnt have html file because the user never is going to see this page, is auto-redirect to the home page
 def logout():
     print(session)

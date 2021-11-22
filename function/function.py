@@ -58,8 +58,9 @@ def random_cocktail():
     drink = data['drinks'][0]
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')          
-    name = '"' + drink["strDrink"] + '"'    
-    result = name, ingredients_in_list(drink), picture
+    name = '"' + drink["strDrink"] + '"'  
+    how = drink["strInstructions"]  
+    result = name, ingredients_in_list(drink), picture, how
     number_of_flav = 0
     return (result, number_of_flav)
 
@@ -144,10 +145,11 @@ def flavor_cocktail(flav1, flav2 = None, flav3 = None):
 
     print('Finished in {:.3f} seconds'.format((time.time_ns() - seconds_elapsed) / 1000000000))
     
+    how = drink["strInstructions"]
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
     name = '"' + drink["strDrink"] + '"'  
-    result_data = name,ingredients_in_list(drink),picture
+    result_data = name,ingredients_in_list(drink),picture, how
     return (result_data, flavours_used, error_text)
 
 
@@ -170,8 +172,9 @@ def result_data(drinkID, number_of_flav):
     drink = (finalData["drinks"])[0]
     picture = drink["strDrinkThumb"] 
     picture= picture.replace('"', '')    # deleting the " because we need only the link to add it to html page
-    name = '"' + drink["strDrink"] + '"'      
-    result = name,ingredients_in_list(drink), picture 
+    name = '"' + drink["strDrink"] + '"'
+    how = drink["strInstructions"]
+    result = name,ingredients_in_list(drink), picture, how
     return (result, number_of_flav) # function 'ingredients_in_list' is storing ingredients to the list
 
 # First version of code (was updated because of the slow speed)
