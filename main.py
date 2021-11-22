@@ -156,6 +156,8 @@ def how():
             return redirect(url_for("chat"))
         elif request.form.get("logout_button") == "logout":
             return redirect(url_for("logout"))
+        elif request.form.get("info_button") == "info":
+            return redirect(url_for("finish"))
     else:
         return render_template("how.html")
 
